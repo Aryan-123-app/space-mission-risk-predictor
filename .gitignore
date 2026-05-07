@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pkl
+*.joblib
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Node
+node_modules/
+dist/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
