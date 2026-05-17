@@ -23,9 +23,6 @@ const Hero = () => {
 
   return (
     <section className="hero-section" id="home">
-      
-      {/* Background Image scoped to Hero */}
-      <div className="space-background"></div>
 
       <motion.div 
         className="hero-content"

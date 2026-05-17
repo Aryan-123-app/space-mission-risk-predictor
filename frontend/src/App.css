@@ -26,18 +26,32 @@ body {
   overflow: hidden;
 }
 
-/* Background Image Layer */
-.space-background {
-  position: absolute;
-  bottom: 0;
+/* Fixed Background Layers */
+.fixed-bg {
+  position: fixed;
+  top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: -2;
-  background-image: url('./assets/hero background.png');
-  background-size: 100vw auto; /* Fits perfectly horizontally, preserves natural aspect ratio, no stretching */
-  background-position: center bottom;
   background-repeat: no-repeat;
+}
+
+.space-background {
+  background-image: url('./assets/hero background.png');
+  background-size: 100vw auto;
+  background-position: center bottom;
+}
+
+.how-it-works-bg {
+  background-image: url('./assets/How_It_Works.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.content-layer {
+  position: relative;
+  z-index: 1;
 }
 
 /* Navbar */
@@ -114,7 +128,6 @@ body {
   text-align: center;
   padding: 7rem 5% 4rem; /* Shifted text elements upwards a little */
   z-index: 10;
-  overflow: hidden; /* Ensures background stays within the hero section */
 }
 
 .hero-arch {
@@ -310,4 +323,160 @@ body {
   .hero-section {
     padding-top: 8rem;
   }
+}
+
+/* How It Works Section */
+.hiw-section {
+  position: relative;
+  min-height: 100vh;
+  padding: 6rem 5% 10rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hiw-header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.hiw-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--color-text-main);
+  letter-spacing: -1px;
+}
+
+.hiw-subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.timeline-container {
+  width: 100%;
+  max-width: 1400px;
+  position: relative;
+  margin-top: 2rem;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 65px; /* center of 130px */
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(109, 40, 217, 0.2), transparent);
+  border-top: 2px dashed rgba(109, 40, 217, 0.4);
+  z-index: 1;
+}
+
+.timeline-steps {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.step-image-placeholder {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 40px rgba(109, 40, 217, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  color: var(--color-accent);
+}
+
+.step-arrow-right {
+  position: absolute;
+  right: -25px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 50%;
+  border: 1px solid rgba(109, 40, 217, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-arrow-right::after {
+  content: '>';
+  font-size: 10px;
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+.step-number {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  background: rgba(109, 40, 217, 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
+}
+
+.step-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.step-desc {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 1200px) {
+  .timeline-steps {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 4rem;
+  }
+  .timeline-line {
+    display: none;
+  }
+  .step-arrow-right {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-steps {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .step-image-placeholder {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+.step-icon-img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  border-radius: 50%;
 }
