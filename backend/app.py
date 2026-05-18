@@ -15,13 +15,18 @@ CORS(app)
 
 # Load trained model
 # Note: Ensure the model file is present in 'backend/model/xgboost_model.pkl'
-model_path = os.path.join(os.path.dirname(__file__), "model", "xgboost_model.pkl")
+
+
+BASE_DIR = os.path.dirname(__file__)
+model_path = os.path.join(BASE_DIR, "model", "xgboost_model.pkl")
+
+model = None
+
 try:
     model = joblib.load(model_path)
-    print("✅ ML Model loaded successfully")
+    print("✅ Model loaded successfully")
 except Exception as e:
-    print(f"❌ Error loading model: {str(e)}")
-    model = None
+    print("❌ Model loading failed:", str(e))
 
 
 # Root endpoint
