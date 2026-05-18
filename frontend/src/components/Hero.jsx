@@ -43,16 +43,10 @@ const Hero = () => {
           Leverage machine learning to analyze mission parameters <br/> and predict the success of space missions.
         </motion.p>
         
-        <motion.div variants={itemVariants} className="hero-actions">
-          <button className="btn-primary">
-            Get Started <Navigation size={18} className="ml-2 icon-arrow" />
-          </button>
-          <button className="btn-secondary">
-            <div className="play-icon-wrapper">
-              <Play size={14} fill="currentColor" />
-            </div>
-            Watch Demo
-          </button>
+        <motion.div variants={itemVariants} className="hero-actions" style={{ display: 'flex', justifyContent: 'center' }}>
+          <a href="#how-it-works" className="btn-primary" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            Get Started <Navigation size={18} className="icon-arrow" style={{ marginLeft: '8px' }} />
+          </a>
         </motion.div>
       </motion.div>
     </section>

@@ -16,9 +16,9 @@ const Navbar = () => {
         <li><a href="#contact">Contact</a></li>
       </ul>
       
-      <button className="btn-nav-action">
+      <a href="#ai-predictions" className="btn-nav-action" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
         <Sparkles size={16} /> Launch Predictor
-      </button>
+      </a>
     </nav>
   );
 };
