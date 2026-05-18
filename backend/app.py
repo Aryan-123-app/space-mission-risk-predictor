@@ -33,25 +33,23 @@ def home():
 # Prediction endpoint
 @app.route("/predict", methods=["POST"])
 def predict():
-    if not model:
-        return jsonify({"error": "Model not loaded on server."}), 500
+    if model is None:
+        return jsonify({"error": "Model not loaded"}), 500
 
     try:
         data = request.get_json()
-        
-        # Extract parameters
-        payload_mass = float(data.get('payload_mass', 0))
-        launch_year = int(data.get('launch_year', 2026))
-        weather = data.get('weather', 'Clear Skies')
-        rocket_success_rate = float(data.get('rocket_success_rate', 90))
-        launch_site_risk = float(data.get('launch_site_risk', 50))
+        print("Incoming:", data)
 
-        # Map weather to a dummy launch_month for the model
+        payload_mass = float(data.get('payload_mass') or 0)
+        launch_year = int(data.get('launch_year') or 2026)
+        weather = data.get('weather') or 'Clear Skies'
+        rocket_success_rate = float(data.get('rocket_success_rate') or 90)
+        launch_site_risk = float(data.get('launch_site_risk') or 50)
+
         weather_map = {"Clear Skies": 6, "Cloudy": 4, "Stormy": 11}
         launch_month = weather_map.get(weather, 6)
 
-        # Prepare input for model
-        input_data = np.array([[
+        input_data = np.array([[ 
             payload_mass,
             launch_year,
             launch_month,
@@ -59,29 +57,22 @@ def predict():
             launch_site_risk
         ]])
 
-        # Run prediction
+        print("Input:", input_data)
+
         prediction = model.predict(input_data)
-        
-        # Calculate a realistic success probability based on input parameters
+
         base_prob = 85.0 if prediction[0] == 1 else 35.0
         success_probability = base_prob + (rocket_success_rate - 90) * 0.8 - (launch_site_risk * 0.2)
-        
-        # Weather impact
+
         if weather == "Stormy":
             success_probability -= 25.0
         elif weather == "Cloudy":
             success_probability -= 5.0
-            
+
         success_probability = max(5.0, min(99.9, success_probability))
         success_probability = round(success_probability, 1)
 
-        # Determine confidence label
-        if success_probability >= 80:
-            confidence = "High"
-        elif success_probability >= 50:
-            confidence = "Medium"
-        else:
-            confidence = "Low"
+        confidence = "High" if success_probability >= 80 else "Medium" if success_probability >= 50 else "Low"
 
         return jsonify({
             "success_probability": success_probability,
@@ -89,8 +80,8 @@ def predict():
         })
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
-
+        print("ERROR:", str(e))
+        return jsonify({"error": str(e)}), 500
 
 # Contact Email endpoint
 @app.route("/contact", methods=["POST"])
