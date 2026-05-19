@@ -152,8 +152,7 @@ const AIPredictions = () => {
       // Add cinematic delay for the loading animation
       await new Promise(r => setTimeout(r, 4500));
 
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const response = await fetch(`${apiUrl}/predict`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/predict`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
