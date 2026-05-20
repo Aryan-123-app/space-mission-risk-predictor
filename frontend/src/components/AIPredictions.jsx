@@ -146,36 +146,41 @@ const AIPredictions = () => {
   };
 
   const handlePredict = async () => {
-    setLoading(true);
-    setResult(null);
-    try {
-      // Add cinematic delay for the loading animation
-      await new Promise(r => setTimeout(r, 4500));
+  setLoading(true);
+  setResult(null);
 
-      const response = await fetch(`${import.meta.env.production.VITE_API_URL}/predict`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          payload_mass: payload,
-          rocket_success_rate: successRate,
-          launch_site_risk: siteRisk,
-          weather: weather,
-          launch_year: year,
-        })
-      });
-      const data = await response.json();
-      if (data.error) {
-        setResult({ error: "Unable to process request. Please try again." });
-      } else {
-        setResult(data);
-      }
-    } catch (err) {
-      console.error(err);
+  try {
+    await new Promise(r => setTimeout(r, 4500));
+
+    const API_URL = import.meta.env.VITE_API_URL || "https://space-mission-risk-predictor.onrender.com";
+
+    const response = await fetch(`${API_URL}/predict`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        payload_mass: payload,
+        rocket_success_rate: successRate,
+        launch_site_risk: siteRisk,
+        weather: weather,
+        launch_year: year,
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
       setResult({ error: "Unable to process request. Please try again." });
-    } finally {
-      setLoading(false);
+    } else {
+      setResult(data);
     }
-  };
+
+  } catch (err) {
+    console.error(err);
+    setResult({ error: "Unable to process request. Please try again." });
+  } finally {
+    setLoading(false);
+  }
+};
 
   const getResultColor = (percentage) => {
     if (percentage >= 85) return '#10b981'; // Emerald
