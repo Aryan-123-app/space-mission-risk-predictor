@@ -35,6 +35,8 @@ def home():
     return jsonify({"message": "🚀 GravitX API is running. Ready for production!"})
 
 
+
+
 # Prediction endpoint
 @app.route("/predict", methods=["POST"])
 def predict():

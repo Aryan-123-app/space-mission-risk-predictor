@@ -1,8 +1,6 @@
 # Python
 __pycache__/
 *.pyc
-*.pkl
-*.joblib
 venv/
 .env
 
